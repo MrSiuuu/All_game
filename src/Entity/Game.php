@@ -26,7 +26,7 @@ class Game
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $releaseDate = null;
+    private ?\DateTimeInterface $releaseDate = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
@@ -40,9 +40,23 @@ class Game
     #[ORM\ManyToMany(targetEntity: Genre::class, inversedBy: 'games')]
     private Collection $genres;
 
+    /**
+     * @var Collection<int, Wishlist>
+     */
+    #[ORM\OneToMany(targetEntity: Wishlist::class, mappedBy: 'game')]
+    private Collection $wishlists;
+
+    /**
+     * @var Collection<int, Review>
+     */
+    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'game')]
+    private Collection $reviews;
+
     public function __construct()
     {
         $this->genres = new ArrayCollection();
+        $this->wishlists = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -58,7 +72,6 @@ class Game
     public function setName(string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -70,7 +83,6 @@ class Game
     public function setPrice(float $price): static
     {
         $this->price = $price;
-
         return $this;
     }
 
@@ -82,19 +94,17 @@ class Game
     public function setDescription(string $description): static
     {
         $this->description = $description;
-
         return $this;
     }
 
-    public function getReleaseDate(): ?\DateTime
+    public function getReleaseDate(): ?\DateTimeInterface
     {
         return $this->releaseDate;
     }
 
-    public function setReleaseDate(\DateTime $releaseDate): static
+    public function setReleaseDate(\DateTimeInterface $releaseDate): static
     {
         $this->releaseDate = $releaseDate;
-
         return $this;
     }
 
@@ -106,7 +116,6 @@ class Game
     public function setImage(?string $image): static
     {
         $this->image = $image;
-
         return $this;
     }
 
@@ -118,7 +127,6 @@ class Game
     public function setEditor(?Editor $editor): static
     {
         $this->editor = $editor;
-
         return $this;
     }
 
@@ -142,6 +150,66 @@ class Game
     public function removeGenre(Genre $genre): static
     {
         $this->genres->removeElement($genre);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Wishlist>
+     */
+    public function getWishlists(): Collection
+    {
+        return $this->wishlists;
+    }
+
+    public function addWishlist(Wishlist $wishlist): static
+    {
+        if (!$this->wishlists->contains($wishlist)) {
+            $this->wishlists->add($wishlist);
+            $wishlist->setGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWishlist(Wishlist $wishlist): static
+    {
+        if ($this->wishlists->removeElement($wishlist)) {
+            // set the owning side to null (unless already changed)
+            if ($wishlist->getGame() === $this) {
+                $wishlist->setGame(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): static
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews->add($review);
+            $review->setGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): static
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getGame() === $this) {
+                $review->setGame(null);
+            }
+        }
 
         return $this;
     }

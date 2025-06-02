@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ game.name }}{% endblock %}
+
+{% block body %}
+<section class="text-gray-400 bg-gray-900 body-font">
+  <div class="container mx-auto px-5 py-24">
+    <div class="flex flex-col text-center w-full mb-10">
+      <h1 class="sm:text-4xl text-3xl font-medium title-font mb-4 text-white">{{ game.name }}</h1>
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">{{ game.description }}</p>
+      <p class="mt-4 text-gray-500">Sorti le {{ game.releaseDate|date('d/m/Y') }}</p>
+      <p class="mt-2 text-blue-400 font-bold text-xl">{{ game.price }} €</p>
+      <p class="mt-2 text-sm text-gray-300">Éditeur : {{ game.editor.name }}</p>
+      <p class="mt-2 text-sm text-gray-300">
+        Genres : 
+        {% for genre in game.genres %}
+            {{ genre.name }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+      </p>
+    </div>
+  </div>
+</section>
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+  <section class="text-gray-400 bg-gray-900 body-font">
+    <div class="container mx-auto px-5 py-8">
+      <h2 class="text-2xl text-white mt-10">Ajouter un avis</h2>
+      {{ form_start(reviewForm) }}
+        {{ form_row(reviewForm.content) }}
+        {{ form_row(reviewForm.rating) }}
+        <button class="bg-indigo-500 text-white px-4 py-2 rounded mt-2">Envoyer</button>
+      {{ form_end(reviewForm) }}
+    </div>
+  </section>
+{% else %}
+  <section class="text-gray-400 bg-gray-900 body-font">
+    <div class="container mx-auto px-5 py-8">
+      <p class="text-white mt-4">Connectez-vous pour laisser un avis.</p>
+    </div>
+  </section>
+{% endif %}
+
+<section class="text-gray-400 bg-gray-900 body-font">
+  <div class="container mx-auto px-5 py-8">
+    <h2 class="text-2xl text-white mt-10">Avis</h2>
+
+    {% for review in game.reviews %}
+      <div class="bg-gray-800 p-4 rounded my-4">
+        <p class="text-white">{{ review.content }}</p>
+        <small class="text-gray-400">Note : {{ review.rating }}/5 - par {{ review.user.email ?? 'Utilisateur inconnu' }}</small>
+      </div>
+    {% else %}
+      <p class="text-white">Aucun avis pour ce jeu.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %} 

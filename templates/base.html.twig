@@ -22,6 +22,7 @@
                 <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
                     <a class="mr-5 hover:text-white" href="{{ path('app_home') }}">Accueil</a>
                     <a class="mr-5 hover:text-white" href="#">Games</a>
+                    <a class="mr-5 hover:text-white" href="{{ path('app_wishlist') }}">Ma Wishlist</a>
                     <a class="mr-5 hover:text-white" href="{{ path('app_about') }}">À propos</a>
                     <a class="mr-5 hover:text-white" href="#">Contact</a>
                 </nav>
@@ -34,6 +35,17 @@
                 <a class="inline-flex items-center bg-gray-800 border-0 py-2 px-3 ml-10 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0" href="#">Login</a>
             </div>
         </header>
+
+        <!-- MESSAGES FLASH -->
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="container mx-auto px-5 py-2">
+                    <div class="bg-{{ label }}-100 border border-{{ label }}-400 text-{{ label }}-700 px-4 py-3 rounded relative" role="alert">
+                        <span class="block sm:inline">{{ message }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
 
         <!-- CONTENU PRINCIPAL -->
         {% block body %}{% endblock %}
