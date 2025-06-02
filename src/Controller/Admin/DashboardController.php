@@ -3,7 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Game;
+use App\Entity\User;
 use App\Entity\Editor;
+use App\Controller\Admin\UserCrudController;
 use Symfony\Component\HttpFoundation\Response;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -30,5 +32,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Editeurs', 'fas fa-building', Editor::class);
         yield MenuItem::linkToCrud('Jeux', 'fas fa-gamepad', Game::class);
+        yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-users', User::class);
     }
 }

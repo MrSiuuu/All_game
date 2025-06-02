@@ -21,10 +21,10 @@
                 </a>
                 <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
                     <a class="mr-5 hover:text-white" href="{{ path('app_home') }}">Accueil</a>
-                    <a class="mr-5 hover:text-white" href="#">Games</a>
+                    <a class="mr-5 hover:text-white" href="{{ path('app_game') }}">Jeux</a>
                     <a class="mr-5 hover:text-white" href="{{ path('app_wishlist') }}">Ma Wishlist</a>
                     <a class="mr-5 hover:text-white" href="{{ path('app_about') }}">À propos</a>
-                    <a class="mr-5 hover:text-white" href="#">Contact</a>
+                    <a class="mr-5 hover:text-white" href="{{ path('app_contact') }}">Contact</a>
                 </nav>
                 <div class="flex md:flex-nowrap flex-wrap justify-center items-end md:justify-start px-3">
                     <div class="relative sm:w-64 w-40 sm:mr-4 mr-2">
@@ -32,7 +32,11 @@
                     </div>
                     <button class="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded">OK</button>
                 </div>
-                <a class="inline-flex items-center bg-gray-800 border-0 py-2 px-3 ml-10 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0" href="#">Login</a>
+                {% if app.user %}
+                    <a class="inline-flex items-center bg-gray-800 border-0 py-2 px-3 ml-10 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0" href="{{ path('app_logout') }}">Logout</a>
+                {% else %}
+                    <a class="inline-flex items-center bg-gray-800 border-0 py-2 px-3 ml-10 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0" href="{{ path('app_login') }}">Login</a>
+                {% endif %}
             </div>
         </header>
 
