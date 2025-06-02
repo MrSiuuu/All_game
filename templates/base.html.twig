@@ -11,7 +11,44 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
-    <body>
+    <body class="bg-gray-900">
+
+        <!-- HEADER -->
+        <header class="text-gray-400 bg-gray-950 body-font">
+            <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+                <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0" href="{{ path('app_home') }}">
+                    <img width="120" src="{{ asset('images/logo-all-games.svg') }}" alt="AllGames">
+                </a>
+                <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+                    <a class="mr-5 hover:text-white" href="{{ path('app_home') }}">Accueil</a>
+                    <a class="mr-5 hover:text-white" href="#">Games</a>
+                    <a class="mr-5 hover:text-white" href="#">About</a>
+                    <a class="mr-5 hover:text-white" href="#">Contact</a>
+                </nav>
+                <div class="flex md:flex-nowrap flex-wrap justify-center items-end md:justify-start px-3">
+                    <div class="relative sm:w-64 w-40 sm:mr-4 mr-2">
+                        <input placeholder="Search" type="text" id="footer-field" name="footer-field" class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:ring-2 focus:ring-blue-900 focus:bg-transparent focus:border-blue-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <button class="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded">OK</button>
+                </div>
+                <a class="inline-flex items-center bg-gray-800 border-0 py-2 px-3 ml-10 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0" href="#">Login</a>
+            </div>
+        </header>
+
+        <!-- CONTENU PRINCIPAL -->
         {% block body %}{% endblock %}
+
+        <!-- FOOTER -->
+        <footer class="text-gray-400 bg-gray-950 body-font">
+            <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
+                <a class="flex title-font font-medium items-center md:justify-start justify-center text-white" href="#">
+                    <img width="70" src="{{ asset('images/logo-all-games.svg') }}" alt="AllGames">
+                </a>
+                <p class="text-sm text-gray-400 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-800 sm:py-2 sm:mt-0 mt-4">
+                    © {{ 'now' | date('Y') }} AllGames
+                </p>
+            </div>
+        </footer>
+
     </body>
 </html>
